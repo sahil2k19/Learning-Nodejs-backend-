@@ -3,7 +3,7 @@ const path = require('path'); // importing path
 
 const port = 8000;  // having port
 
-const app = express();  //creating app
+const app = express();  //creating app here app is created
 
 app.set('view engine', 'ejs');   // setting our template engine (ejs here)
 
@@ -49,12 +49,12 @@ app.post('/create-contact', (req, res) => {  // here we used post as we send dat
     //     number: req.body.number, req.body.number = inputed number in template home.ejs
     // })
     contact_list.push(req.body);// here we push the input in contact_list list and req.body = shortform of aboue commented method ;
-    return res.redirect('/');
+    return res.redirect('/');// redirect to home after all the  store data in RAM;
 })
 
 
 
-app.listen(port, (err) => {
+app.listen(port, (err) => { // this is listen which is must. it will go on the port:8000(mention above) if error then if(err) will execute ;
     if (err) {
         console.log('error in the server', err);
         return;
