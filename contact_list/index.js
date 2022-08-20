@@ -44,10 +44,14 @@ app.get('/practice', (req, res) => { //same as above ;
 })
 
 app.post('/create-contact', (req, res) => {  // here we used post as we send data to server but here we store data to local RAM ( and also '/created-contact' is the place where action will happen)
+
+
     // contact_list.push({
     //     name: req.body.name, // req.body.name = inputed name in template home.ejs
     //     number: req.body.number, req.body.number = inputed number in template home.ejs
     // })
+
+
     contact_list.push(req.body);// here we push the input in contact_list list and req.body = shortform of aboue commented method ;
     return res.redirect('/');// redirect to home after all the  store data in RAM;
 })
