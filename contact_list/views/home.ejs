@@ -1,0 +1,34 @@
+<html>
+
+<head>
+    <title>
+        <%=title%>
+    </title>
+    <link rel="stylesheet" href="css/home.css">
+</head>
+
+<body>
+    <h1>Rendered from EJS views</h1>
+    <div>
+        <ul>
+            <% for( let i=0; i<contact_list.length; i++ ) { %>
+                <li>
+                    <p>
+                        <%= contact_list[i].name %>
+                    </p>
+                    <%= contact_list[i].number %>
+                </li>
+                <% } %>
+        </ul>
+    </div>
+    <form action="/create-contact" method="POST">
+        <input type="text" name="name" placeholder="name">
+        <input type="number" name="number" placeholder="number">
+        <button type="submit">Add Contact</button>
+    </form>
+    <script src="js/home.js">
+
+    </script>
+</body>
+
+</html>
