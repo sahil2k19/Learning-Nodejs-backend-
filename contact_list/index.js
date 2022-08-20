@@ -7,10 +7,9 @@ const app = express();  //creating app here app is created
 
 app.set('view engine', 'ejs');   // setting our template engine (ejs here)
 
-app.set('views', path.join(__dirname, 'views')); // making views folder as our main folder for template. as whenever we hit link it will first look at the views folder as it set as main dir for that (as all templates are here like home.ejs practice.ejs)
+app.set('views', path.join(__dirname, 'views')); // this makes views available for us to use. which contains template init;
 
-app.use(express.urlencoded());// this is used in post req as mention bellow in app.post
-//this is a middleware which used to manipulate request and respond. (THIS CONTAIN req.body) everytime when we load the req and respond always goes first here;
+app.use(express.urlencoded());// this is middleware// this read input data of form and provide in form of key value pair for us
 
 app.use(express.static('assets')); // this is also a middleware .. here we load a ASSETS here (so whenever the sites look for css and js or any images located here )
 //in our template whenever we write any css and js or paste any images it always look for assests/css/home.css in our case
@@ -28,7 +27,7 @@ var contact_list = [ // we created list of contacts
     }
 ]
 
-app.get('/', (req, res) => {   // we go '/' here and respong acc to that 
+app.get('/', (req, res) => {  // here '/' this is router and the arrow function is controller function ;
 
     return res.render('home', { // render home template which we created in views named home.ejs
         title: 'My Contacts List', // we pass title which we use in template to pass js to make dynamic content
@@ -59,7 +58,7 @@ app.post('/create-contact', (req, res) => {  // here we used post as we send dat
 
 
 app.listen(port, (err) => { // this is listen which is must. it will go on the port:8000(mention above) if error then if(err) will execute ;
-    if (err) {
+    if (err) {// if we somehow go on wrong url than this error massage encounter
         console.log('error in the server', err);
         return;
     }
