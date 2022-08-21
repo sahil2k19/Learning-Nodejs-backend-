@@ -3,6 +3,8 @@ const path = require('path'); // importing path
 
 const port = 8000;  // having port
 
+const db = require('./config/mongoose'); // connecting to mongoose (db);
+
 const app = express();  //creating app here app is created
 
 app.set('view engine', 'ejs');   // setting our template engine (ejs here)
