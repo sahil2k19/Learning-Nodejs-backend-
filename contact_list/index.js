@@ -41,13 +41,28 @@ app.get('/practice', (req, res) => { //same as above ;
 
     });
 })
+// here number act as variable like (number = 'whatever we pass on html or ejs ')
+// if i change number to something else than like (address = 'whatever we pass on html or ejs')
+
+// app.get('/delete-contact/:number', (req, res) => { // we have to remove (:number) for query part
+app.get('/delete-contact/', (req, res) => { //we will not pass (;number) 
+    //this is first part 
+    // console.log(req.params);
+    // let phone = req.params.number;
+
+    //second part
+    console.log(req.query);
+    let phone = req.query.number;
+})
 
 app.post('/create-contact', (req, res) => {  // here we used post as we send data to server but here we store data to local RAM ( and also '/created-contact' is the place where action will happen)
 
 
     // contact_list.push({
-    //     name: req.body.name, // req.body.name = inputed name in template home.ejs
-    //     number: req.body.number, req.body.number = inputed number in template home.ejs
+    // req.body.name = inputed name in template home.ejs
+    //     name: req.body.name,
+    //req.body.number = inputed number in template home.ejs
+    //     number: req.body.number, 
     // })
 
 
