@@ -41,8 +41,8 @@ app.get('/practice', (req, res) => { //same as above ;
 
     });
 })
-// here number act as variable like (number = 'whatever we pass on html or ejs ')
-// if i change number to something else than like (address = 'whatever we pass on html or ejs')
+// in below comented code here number act as variable like (number = 'whatever we pass on html or ejs ')
+// if i change number to something else then like (address = 'whatever we pass on html or ejs')
 
 // app.get('/delete-contact/:number', (req, res) => { // we have to remove (:number) for query part
 app.get('/delete-contact/', (req, res) => { //we will not pass (;number) 
@@ -51,11 +51,26 @@ app.get('/delete-contact/', (req, res) => { //we will not pass (;number)
     // let phone = req.params.number;
 
     //second part
-    console.log(req.query);
-    let phone = req.query.number;
+    console.log(req.query.number);
+    console.log(req.query.name);
+    let number = req.query.number;
+
+
+    //in below code we find index in contact_list that matches query ;
+    // in findIndex() we pass function inside that, if that function is true then it will return index (in contactIndex here)
+    let contactIndex = contact_list.findIndex((x) => { return x.number == number });
+
+    // console.log(contactIndex);
+    if (contactIndex != -1) {
+        contact_list.splice(contactIndex, 1); // array.splice(index,howmany, item1.....itemx);
+        //splice() help in add, remove or overwrite
+    }
+    return res.redirect('back'); //redirect to the homepage(where we currently are);
 })
 
-app.post('/create-contact', (req, res) => {  // here we used post as we send data to server but here we store data to local RAM ( and also '/created-contact' is the place where action will happen)
+
+// here we used post as we send data to server but here we store data to local RAM ( and also '/created-contact' is the place where action will happen)
+app.post('/create-contact', (req, res) => {
 
 
     // contact_list.push({
