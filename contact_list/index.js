@@ -1,17 +1,43 @@
 const express = require('express'); //importing express here
+
+
 const path = require('path'); // importing path
+
+
 
 const port = 8000;  // having port
 
+
+
 const db = require('./config/mongoose'); // connecting to mongoose (db);
+
+
+
+
+// we export Contact from models/contact now we import here
+const Contact = require('./models/contact');//we will use this contact to use Contact in models
+
 
 const app = express();  //creating app here app is created
 
+
+
+
 app.set('view engine', 'ejs');   // setting our template engine (ejs here)
+
+
+
 
 app.set('views', path.join(__dirname, 'views')); // this makes views available for us to use. which contains template init;
 
+
+
+
 app.use(express.urlencoded());// this is middleware// this read input data of form and provide in form of key value pair for us
+
+
+
+
 
 app.use(express.static('assets')); // this is also a middleware .. here we load a ASSETS here (so whenever the sites look for css and js or any images located here )
 //in our template whenever we write any css and js or paste any images it always look for assests/css/home.css in our case
@@ -29,13 +55,41 @@ var contact_list = [ // we created list of contacts
     }
 ]
 
-app.get('/', (req, res) => {  // here '/' this is router and the arrow function is controller function ;
 
-    return res.render('home', { // render home template which we created in views named home.ejs
-        title: 'My Contacts List', // we pass title which we use in template to pass js to make dynamic content
-        contact_list: contact_list, // we pass whole list of contact here which we created above ;
-    });
+
+
+
+
+
+// here '/' this is router and the arrow function is controller function ;
+app.get('/', (req, res) => {
+
+    //fetching contacts
+    //in below code find({}) = finding all contacts
+    //we can specify here to find specific contacts(like = find({name:sahil}, ) which can find all the contacts having name sahil;
+    Contact.find({}, (err, contacts) => {
+        if (err) {
+            console.log('error in fetching contacts from db');
+            return;
+        }
+        return res.render('home', {
+            title: 'My Contacts list',
+            contact_list: contacts,
+        })
+    })
+
+    // return res.render('home', { // render home template which we created in views named home.ejs
+    // // we now nomore use below code as now we have our own database 
+    //     title: 'My Contacts List', // we pass title which we use in template to pass js to make dynamic content
+    //     contact_list: contact_list, // we pass whole list of contact here which we created above ;
+    // });
 })
+
+
+
+
+
+
 
 app.get('/practice', (req, res) => { //same as above ;
     return res.render('practice', {
@@ -45,6 +99,11 @@ app.get('/practice', (req, res) => { //same as above ;
 })
 // in below comented code here number act as variable like (number = 'whatever we pass on html or ejs ')
 // if i change number to something else then like (address = 'whatever we pass on html or ejs')
+
+
+
+
+
 
 // app.get('/delete-contact/:number', (req, res) => { // we have to remove (:number) for query part
 app.get('/delete-contact/', (req, res) => { //we will not pass (;number) 
@@ -71,7 +130,11 @@ app.get('/delete-contact/', (req, res) => { //we will not pass (;number)
 })
 
 
+
+
+
 // here we used post as we send data to server but here we store data to local RAM ( and also '/created-contact' is the place where action will happen)
+// this is the controller which create (CONTACTS);
 app.post('/create-contact', (req, res) => {
 
 
@@ -83,9 +146,33 @@ app.post('/create-contact', (req, res) => {
     // })
 
 
-    contact_list.push(req.body);// here we push the input in contact_list list and req.body = shortform of aboue commented method ;
-    return res.redirect('/');// redirect to home after all the  store data in RAM;
+    //here req.body object allow us to access data in a string or json object from the client side
+    //so after creating our own database we dont need (contact_list variables to push to our contacts)
+    // contact_list.push(req.body);
+
+
+    //now we create using our MONGOdb database 
+    // we use Contact model below;
+    Contact.create({
+        name: req.body.name,
+        number: req.body.number,
+    }, (err, newContact) => { //if there is an error
+        if (err) {
+            console.log('error in creating contact!');
+            return;
+        }
+        // if no error
+        console.log("**********", newContact);
+        return res.redirect('back');
+    })
+
+
+    // redirect to home after all the  store data in RAM;
+    // return res.redirect('/');
 })
+
+
+
 
 
 
