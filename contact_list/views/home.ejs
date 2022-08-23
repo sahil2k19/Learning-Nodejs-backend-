@@ -70,12 +70,20 @@
                 <!-- here we pass whatever after '/delete-contact/'  -->
                 <!-- here we pass <%= i.number %> in variable number in index.js (app.get('delete-contact')) -->
 
-                <!-- this is first part passing as params  -->
+                <!-- 1. this is first part passing as params  -->
+
+
                 <!-- <a href="/delete-contact/<%=i.number %> " class="btn btn-primary">Delete</a> -->
 
-                <!-- this is second part passing as query -->
+                <!-- 2. this is second part passing as query -->
                 <!-- instead of passing variable in router we pass here -->
-                <a href="/delete-contact/?number=<%=i.number %>  " class="btn btn-primary">Delete</a>
+
+
+                <!-- <a href="/delete-contact/?number=<%=i.number %>  " class="btn btn-primary">Delete</a> -->
+
+
+                <!-- 3. here we use id cuz we use our database -->
+                <a href="/delete-contact/?id=<%=i._id %>  " class="btn btn-primary">Delete</a>
 
             </div>
         </div>

@@ -108,24 +108,44 @@ app.get('/practice', (req, res) => { //same as above ;
 // app.get('/delete-contact/:number', (req, res) => { // we have to remove (:number) for query part
 app.get('/delete-contact/', (req, res) => { //we will not pass (;number) 
     //this is first part 
+
     // console.log(req.params);
     // let phone = req.params.number;
 
-    //second part
-    console.log(req.query.number);
-    console.log(req.query.name);
-    let number = req.query.number;
+
+    //second part using local variable contact_list
+
+    // console.log(req.query.number);
+    // console.log(req.query.name);
+    // let number = req.query.number;
 
 
-    //in below code we find index in contact_list that matches query ;
-    // in findIndex() we pass function inside that, if that function is true then it will return index (in contactIndex here)
-    let contactIndex = contact_list.findIndex((x) => { return x.number == number });
+    // //in below code we find index in contact_list that matches query ;
 
-    // console.log(contactIndex);
-    if (contactIndex != -1) {
-        contact_list.splice(contactIndex, 1); // array.splice(index,howmany, item1.....itemx);
-        //splice() help in add, remove or overwrite
-    }
+    // // in findIndex() we pass function inside that, if that function is true then it will return index (in contactIndex here)
+    // let contactIndex = contact_list.findIndex((x) => { return x.number == number });
+
+    // // console.log(contactIndex);
+    // if (contactIndex != -1) {
+    //     contact_list.splice(contactIndex, 1); // array.splice(index,howmany, item1.....itemx);
+    //     //splice() help in add, remove or overwrite
+    // }
+
+
+
+    //third part
+    // get id from query in the ul
+    let id = req.query.id; //req.query.fetch(shortcut to memorize);
+
+    //find the contact in the database using id and delete 
+    Contact.findByIdAndDelete(id, (err) => {
+        if (err) {
+            console.log('error in deleting an object ');
+            return;
+        }
+    })
+
+
     return res.redirect('back'); //redirect to the homepage(where we currently are);
 })
 
@@ -154,7 +174,7 @@ app.post('/create-contact', (req, res) => {
     //now we create using our MONGOdb database 
     // we use Contact model below;
     Contact.create({
-        name: req.body.name,
+        name: req.body.name, //req.body will insert (shortcut to memorize)
         number: req.body.number,
     }, (err, newContact) => { //if there is an error
         if (err) {
